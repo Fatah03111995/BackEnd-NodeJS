@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import booksTemp from './booksTemp.js';
 import {
-    filters, reWrite, log,
+    filterString, filterAll, reWrite, log,
 } from './util.js';
 
 // 1. API untuk menyimpan buku
@@ -70,19 +70,18 @@ const getAllBooksByReq = (req, h) => {
     let allBooks = [...booksTemp];
 
     if (name !== undefined) {
-        log(name);
-        allBooks = filters(booksTemp, 'name', name.toLowerCase());
+        allBooks = filterString(booksTemp, 'name', name);
     }
 
     if (reading !== undefined) {
         byReading = reading.toString() === '1'; // jika 1 property reading: true
-        allBooks = filters(booksTemp, 'reading', byReading);
+        allBooks = filterAll(booksTemp, 'reading', byReading);
     }
 
     if (finished !== undefined) {
-        log(finished);
-        byFinished = finished.toString === '1'; // jika 1 property finished: true
-        allBooks = filters(booksTemp, 'finished', byFinished);
+        log('block if finished not undefined')
+        byFinished = finished.toString() === '1'; // jika 1 property finished: true
+        allBooks = filterAll(booksTemp, 'finished', byFinished);
     }
 
     return h.response({

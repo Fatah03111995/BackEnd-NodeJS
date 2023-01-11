@@ -1,13 +1,13 @@
-const filters = (datas, property, criteria) => datas.filter((data) => {
-    let dataProperty = data[property];
-    if (typeof (dataProperty) === 'string') {
-        dataProperty = dataProperty.toLowerCase();
-        dataProperty = new RegExp(dataProperty);
-
-        return dataProperty === criteria;
-    }
-    else return dataProperty === criteria;
+const filterString = (datas, property, criteria) => datas.filter((data) => {
+    let dataProperty = data[property].toLowerCase();
+    let dataCriteria = criteria.toLowerCase();
+    dataCriteria = new RegExp(dataCriteria);
+    return dataCriteria.test(dataProperty)
 });
+
+const filterAll = (datas, property, criteria) => datas.filter((data) => {
+    return data[property] === criteria
+})
 const reWrite = (datas) => datas.map((data) => {
     const newData = {
         id: data.id,
@@ -20,5 +20,5 @@ const reWrite = (datas) => datas.map((data) => {
 const log = (it) => console.log(it);
 
 export {
-    filters, reWrite, log,
+    filterString, filterAll, reWrite, log,
 };
